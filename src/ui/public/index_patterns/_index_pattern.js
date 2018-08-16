@@ -192,7 +192,7 @@ export function IndexPatternProvider(Private, config, Promise, confirmModalPromi
       this.getComputedFields = getComputedFields.bind(this);
 
       this.flattenHit = flattenHit(this);
-      this.formatHit = formatHit(this, fieldformats.getDefaultInstance('string'));
+      this.formatHit = formatHit(this, fieldformats.getDefaultInstance('string'), fieldformats.getInstance('map'));
       this.formatField = this.formatHit.formatField;
     }
 
