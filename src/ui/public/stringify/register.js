@@ -11,6 +11,7 @@ import stringifySource from 'ui/stringify/types/source';
 import stringifyColor from 'ui/stringify/types/color';
 import stringifyTruncate from 'ui/stringify/types/truncate';
 import stringifyBoolean from 'ui/stringify/types/boolean';
+import stringifyMap from 'ui/stringify/types/map';
 
 fieldFormats.register(stringifyUrl);
 fieldFormats.register(stringifyBytes);
@@ -24,3 +25,4 @@ fieldFormats.register(stringifySource);
 fieldFormats.register(stringifyColor);
 fieldFormats.register(stringifyTruncate);
 fieldFormats.register(stringifyBoolean);
+fieldFormats.register(stringifyMap);

@@ -138,7 +138,7 @@ module.directive('kbnTableRow', function ($compile, $httpParamSerializer, kbnUrl
 
           newHtmls.push(cellTemplate({
             timefield: false,
-            sourcefield: (column === '_source'),
+            sourcefield: (column === '_source' || column === 'log'),
             formatted: _displayField(row, column, true),
             filterable: isFilterable,
             column
@@ -188,7 +188,7 @@ module.directive('kbnTableRow', function ($compile, $httpParamSerializer, kbnUrl
         const indexPattern = $scope.indexPattern;
         const text = indexPattern.formatField(row, fieldName);
 
-        if (truncate && text.length > MIN_LINE_LENGTH) {
+        if (truncate && text.length > MIN_LINE_LENGTH && fieldName !== 'log') {
           return truncateByHeightTemplate({
             body: text
           });

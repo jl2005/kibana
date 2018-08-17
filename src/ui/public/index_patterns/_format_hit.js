@@ -2,12 +2,16 @@ import _ from 'lodash';
 // Takes a hit, merges it with any stored/scripted fields, and with the metaFields
 // returns a formated version
 
-export default function (indexPattern, defaultFormat) {
+export default function (indexPattern, defaultFormat, mapFormat) {
 
   function convert(hit, val, fieldName) {
     const field = indexPattern.fields.byName[fieldName];
     if (!field) return defaultFormat.convert(val, 'html');
     return field.format.getConverterFor('html')(val, field, hit);
+  }
+
+  function logconvert(hit, val) {
+    return mapFormat.getConverterFor('html')(val, null, hit);
   }
 
   function formatHit(hit) {
@@ -35,6 +39,11 @@ export default function (indexPattern, defaultFormat) {
 
     if (!partials) {
       partials = hit.$$_partialFormatted = {};
+    }
+
+    if (fieldName === 'log') {
+      const val = hit._source['log'];
+      return partials[fieldName] = logconvert(hit, val);
     }
 
     const val = fieldName === '_source' ? hit._source : indexPattern.flattenHit(hit)[fieldName];
