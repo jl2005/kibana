@@ -42,7 +42,7 @@ export default function (indexPattern, defaultFormat, mapFormat) {
     }
 
     if (fieldName === 'log') {
-      const val = hit._source['log'];
+      const val = hit._source.log;
       return partials[fieldName] = logconvert(hit, val);
     }
 
