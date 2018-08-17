@@ -31,7 +31,7 @@ export function createMapFormat(FieldFormat) {
     text: (value) => toJson(value),
     html: function sourceToHtml(source, field, hit) {
       const pairs = [];
-      Object.keys( source ).forEach (k => { pairs.push([k, source[k]]) });
+      Object.keys(source).forEach (k => { pairs.push([k, source[k]]); });
       if (pairs.length === 0) return this.getConverterFor('text')(source, field, hit);
 
       return mapTemplate({ defPairs: pairs });
