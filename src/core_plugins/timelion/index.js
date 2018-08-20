@@ -1,6 +1,6 @@
 
 module.exports = function (kibana) {
-  let mainFile = 'plugins/timelion/app';
+  //let mainFile = 'plugins/timelion/app';
 
   const ownDescriptor = Object.getOwnPropertyDescriptor(kibana, 'autoload');
   const protoDescriptor = Object.getOwnPropertyDescriptor(kibana.constructor.prototype, 'autoload');
@@ -8,11 +8,12 @@ module.exports = function (kibana) {
   if (descriptor.get) {
     // the autoload list has been replaced with a getter that complains about
     // improper access, bypass that getter by seeing if it is defined
-    mainFile = 'plugins/timelion/app_with_autoload';
+    //mainFile = 'plugins/timelion/app_with_autoload';
   }
 
   return new kibana.Plugin({
     require: ['kibana', 'elasticsearch'],
+      /*
     uiExports: {
       app: {
         title: 'Timelion',
@@ -37,6 +38,7 @@ module.exports = function (kibana) {
         'plugins/timelion/vis'
       ]
     },
+    */
     init: require('./init.js'),
   });
 };

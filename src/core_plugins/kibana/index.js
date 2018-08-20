@@ -26,7 +26,7 @@ module.exports = function (kibana) {
     },
 
     uiExports: {
-      hacks: ['plugins/kibana/dev_tools/hacks/hide_empty_tools'],
+      //hacks: ['plugins/kibana/dev_tools/hacks/hide_empty_tools'],
       app: {
         id: 'kibana',
         title: 'Kibana',
@@ -39,7 +39,7 @@ module.exports = function (kibana) {
           'fieldFormats',
           'navbarExtensions',
           'managementSections',
-          'devTools',
+          //'devTools',
           'docViews'
         ],
 
@@ -93,7 +93,7 @@ module.exports = function (kibana) {
           subUrlBase: `${kbnBaseUrl}#/dashboard`,
           description: 'compose visualizations for much win',
           icon: 'plugins/kibana/assets/dashboard.svg',
-        }, {
+/*        }, {
           id: 'kibana:dev_tools',
           title: 'Dev Tools',
           order: 9001,
@@ -108,6 +108,7 @@ module.exports = function (kibana) {
           description: 'define index patterns, change config, and more',
           icon: 'plugins/kibana/assets/settings.svg',
           linkToLastSubUrl: false
+          */
         },
       ],
 
