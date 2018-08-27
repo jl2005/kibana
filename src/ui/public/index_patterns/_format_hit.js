@@ -43,7 +43,10 @@ export default function (indexPattern, defaultFormat, mapFormat) {
 
     if (fieldName === 'log') {
       const val = hit._source.log;
-      return partials[fieldName] = logconvert(hit, val);
+      if (val) {
+        return partials[fieldName] = logconvert(hit, val);
+      }
+      fieldName = '_source';
     }
 
     const val = fieldName === '_source' ? hit._source : indexPattern.flattenHit(hit)[fieldName];
