@@ -23,7 +23,7 @@ async function fetchPredecessors(es, indexPattern, anchorDocument, sort, size) {
 function prepareQueryBody(indexPattern, anchorDocument, sort, size) {
   const successorsQueryBody = addComputedFields(
     indexPattern,
-    createSuccessorsQueryBody(anchorDocument.sort, sort, size)
+    createSuccessorsQueryBody(anchorDocument._source, anchorDocument.sort, sort, size)
   );
   return successorsQueryBody;
 }
