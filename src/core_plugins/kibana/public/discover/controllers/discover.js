@@ -432,15 +432,15 @@ function discoverController($scope, config, courier, $route, $window, Notifier,
 
       // save data
       if ($scope.downloadSize > 0) {
-        var lines = $scope.rows.map(function (row) {
-           const val = row._source.log;
-           if (val) {
-             return JSON.stringify(val);
-           }
-           return JSON.stringify(row._source);
+        const lines = $scope.rows.map(function (row) {
+          const val = row._source.log;
+          if (val) {
+            return JSON.stringify(val);
+          }
+          return JSON.stringify(row._source);
         });
-        var data = lines.join('\r\n');
-        saveAs(new Blob([data], { type: 'text/plain' }), indexPattern+$scope.downloadSize+".txt");
+        const data = lines.join('\r\n');
+        saveAs(new Blob([data], { type: 'text/plain' }), indexPattern + $scope.downloadSize + '.txt');
       }
 
       notify.event('flatten hit and count fields', function () {
