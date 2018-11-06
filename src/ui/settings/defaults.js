@@ -59,7 +59,7 @@ export default function defaultSettingsProvider() {
       description: 'The index to access if no index is set',
     },
     'defaultColumns': {
-      value: ['_source'],
+      value: ['log'],
       description: 'Columns displayed by default in the Discovery tab',
     },
     'metaFields': {
@@ -278,7 +278,7 @@ export default function defaultSettingsProvider() {
       description: 'Default field containing a timestamp when using .es()'
     },
     'timelion:es.default_index': {
-      value: '_all',
+      value: 'filebeat-alive-check-*',
       description: 'Default elasticsearch index to search with .es()'
     },
     'timelion:target_buckets': {
