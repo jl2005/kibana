@@ -28,7 +28,7 @@ module.exports = function (kibana) {
     },
 
     uiExports: {
-      hacks: ['plugins/kibana/dev_tools/hacks/hide_empty_tools'],
+      //hacks: ['plugins/kibana/dev_tools/hacks/hide_empty_tools'],
       app: {
         id: 'kibana',
         title: 'Kibana',
@@ -41,7 +41,7 @@ module.exports = function (kibana) {
           'fieldFormats',
           'navbarExtensions',
           'managementSections',
-          'devTools',
+          //'devTools',
           'docViews'
         ],
         injectVars: function (server) {
@@ -103,6 +103,7 @@ module.exports = function (kibana) {
           description: 'compose visualizations for much win',
           icon: 'plugins/kibana/assets/dashboard.svg',
         }, {
+            /*
           id: 'kibana:dev_tools',
           title: 'Dev Tools',
           order: 9001,
@@ -110,6 +111,7 @@ module.exports = function (kibana) {
           description: 'development tools',
           icon: 'plugins/kibana/assets/wrench.svg'
         }, {
+        */
           id: 'kibana:management',
           title: 'Management',
           order: 9003,

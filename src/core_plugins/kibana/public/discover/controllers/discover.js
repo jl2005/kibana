@@ -31,6 +31,8 @@ import { documentationLinks } from 'ui/documentation_links/documentation_links';
 import { SavedObjectsClientProvider } from 'ui/saved_objects';
 import { getDefaultQuery } from 'ui/parse_query';
 
+import { saveAs } from '@spalger/filesaver';
+
 const app = uiModules.get('apps/discover', [
   'kibana/notify',
   'kibana/courier',
@@ -154,6 +156,8 @@ function discoverController($scope, config, courier, $route, $window, Notifier,
   .set('index', $scope.indexPattern)
   .highlightAll(true)
   .version(true);
+
+   $scope.downloadSize = 0;
 
   if (savedSearch.id) {
     docTitle.change(savedSearch.title);
@@ -347,6 +351,11 @@ function discoverController($scope, config, courier, $route, $window, Notifier,
     .catch(notify.error);
   };
 
+  $scope.download = function (size) {
+    $scope.downloadSize = size;
+    $scope.fetch();
+  };
+
   $scope.opts.fetch = $scope.fetch = function () {
     // ignore requests to fetch before the app inits
     if (!init.complete) return;
@@ -403,6 +412,10 @@ function discoverController($scope, config, courier, $route, $window, Notifier,
     segmented.setSortFn(sortFn);
     segmented.setSize($scope.opts.sampleSize);
 
+    if ($scope.downloadSize > 0) {
+      segmented.setSize($scope.downloadSize);
+    }
+
     // triggered when the status updated
     segmented.on('status', function (status) {
       $scope.fetchStatus = status;
@@ -430,6 +443,19 @@ function discoverController($scope, config, courier, $route, $window, Notifier,
       // the merge rows, use a new array to help watchers
       $scope.rows = merged.hits.hits.slice();
 
+      // save data
+      if ($scope.downloadSize > 0) {
+        const lines = $scope.rows.map(function (row) {
+          const val = row._source.log;
+          if (val) {
+            return JSON.stringify(val);
+          }
+          return JSON.stringify(row._source);
+        });
+        const data = lines.join('\r\n');
+        saveAs(new Blob([data], { type: 'text/plain' }), indexPattern + $scope.downloadSize + '.txt');
+      }
+
       notify.event('flatten hit and count fields', function () {
         let counts = $scope.fieldCounts;
 
@@ -456,6 +482,11 @@ function discoverController($scope, config, courier, $route, $window, Notifier,
     });
 
     segmented.on('complete', function () {
+      // clear downloadSize flag
+      if ($scope.downloadSize > 0) {
+        $scope.downloadSize = 0;
+      }
+
       if ($scope.fetchStatus.hitCount === 0) {
         flushResponseData();
       }

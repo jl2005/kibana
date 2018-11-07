@@ -11,6 +11,7 @@ import { stringifySource } from 'ui/stringify/types/source';
 import { stringifyColor } from 'ui/stringify/types/color';
 import { stringifyTruncate } from 'ui/stringify/types/truncate';
 import { stringifyBoolean } from 'ui/stringify/types/boolean';
+import { stringifyMap } from 'ui/stringify/types/map';
 
 RegistryFieldFormatsProvider.register(stringifyUrl);
 RegistryFieldFormatsProvider.register(stringifyBytes);
@@ -24,3 +25,4 @@ RegistryFieldFormatsProvider.register(stringifySource);
 RegistryFieldFormatsProvider.register(stringifyColor);
 RegistryFieldFormatsProvider.register(stringifyTruncate);
 RegistryFieldFormatsProvider.register(stringifyBoolean);
+RegistryFieldFormatsProvider.register(stringifyMap);

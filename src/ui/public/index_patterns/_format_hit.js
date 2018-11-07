@@ -4,7 +4,7 @@ import chrome from 'ui/chrome';
 // Takes a hit, merges it with any stored/scripted fields, and with the metaFields
 // returns a formatted version
 
-export function formatHit(indexPattern, defaultFormat) {
+export function formatHit(indexPattern, defaultFormat, mapFormat) {
 
   function convert(hit, val, fieldName) {
     const field = indexPattern.fields.byName[fieldName];
@@ -15,6 +15,10 @@ export function formatHit(indexPattern, defaultFormat) {
       basePath: chrome.getBasePath(),
     };
     return field.format.getConverterFor('html')(val, field, hit, parsedUrl);
+  }
+
+  function logconvert(hit, val) {
+    return mapFormat.getConverterFor('html')(val, null, hit);
   }
 
   function formatHit(hit) {
@@ -42,6 +46,14 @@ export function formatHit(indexPattern, defaultFormat) {
 
     if (!partials) {
       partials = hit.$$_partialFormatted = {};
+    }
+
+    if (fieldName === 'log') {
+      const val = hit._source.log;
+      if (val) {
+        return partials[fieldName] = logconvert(hit, val);
+      }
+      fieldName = '_source';
     }
 
     const val = fieldName === '_source' ? hit._source : indexPattern.flattenHit(hit)[fieldName];

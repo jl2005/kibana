@@ -14,6 +14,14 @@
     <!-- Right-side: menu -->
     <div class="kuiLocalNavRow__section">
       <div class="kuiLocalMenu">
+        <div>
+         <b>Download:</b> &nbsp;
+         <a ng-click="download(500);">500 <i aria-hidden="true" class="fa fa-download"></i></a> &nbsp;
+         <a ng-click="download(1000);">1000 <i aria-hidden="true" class="fa fa-download"></i></a> &nbsp;
+         <a ng-click="download(5000);">5000 <i aria-hidden="true" class="fa fa-download"></i></a> &nbsp;
+         <a ng-click="download(10000);">10000 <i aria-hidden="true" class="fa fa-download"></i></a> &nbsp;
+        </div>
+
         <button
           class="kuiLocalMenuItem"
           ng-repeat="menuItem in kbnTopNav.menuItems"
