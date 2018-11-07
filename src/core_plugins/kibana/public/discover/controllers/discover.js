@@ -31,7 +31,7 @@ import { documentationLinks } from 'ui/documentation_links/documentation_links';
 import { SavedObjectsClientProvider } from 'ui/saved_objects';
 import { getDefaultQuery } from 'ui/parse_query';
 
-import { saveAs } from '@spalger/filesaver';
+import { saveAs } from '@elastic/filesaver';
 
 const app = uiModules.get('apps/discover', [
   'kibana/notify',
