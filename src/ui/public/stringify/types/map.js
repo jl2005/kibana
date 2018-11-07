@@ -2,18 +2,18 @@ import _ from 'lodash';
 import { noWhiteSpace } from 'ui/utils/no_white_space';
 import angular from 'angular';
 import { IndexPatternsFieldFormatProvider } from 'ui/index_patterns/_field_format/field_format';
-export function MapFormatProvider(Private) {
+export function stringifyMap(Private) {
   const FieldFormat = Private(IndexPatternsFieldFormatProvider);
   const template = _.template(noWhiteSpace(require('ui/stringify/types/map.html')));
 
-  _.class(_Map).inherits(FieldFormat);
-  function _Map(params) {
-    _Map.Super.call(this, params);
+  _.class(Map).inherits(FieldFormat);
+  function Map(params) {
+    Map.Super.call(this, params);
   }
 
-  _Map.id = 'map';
-  _Map.title = 'map';
-  _Map.fieldType = [
+  Map.id = 'map';
+  Map.title = 'map';
+  Map.fieldType = [
     'number',
     'boolean',
     'date',
@@ -27,7 +27,7 @@ export function MapFormatProvider(Private) {
     'conflict'
   ];
 
-  _Map.prototype._convert = {
+  Map.prototype._convert = {
     text: angular.toJson,
     html: function sourceToHtml(source, field, hit) {
       const pairs = [];
@@ -38,5 +38,5 @@ export function MapFormatProvider(Private) {
     }
   };
 
-  return _Map;
+  return Map;
 }
