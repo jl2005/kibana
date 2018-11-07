@@ -157,7 +157,7 @@ function discoverController($scope, config, courier, $route, $window, Notifier,
   .highlightAll(true)
   .version(true);
 
-   $scope.downloadSize = 0;
+  $scope.downloadSize = 0;
 
   if (savedSearch.id) {
     docTitle.change(savedSearch.title);
