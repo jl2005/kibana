@@ -43,17 +43,86 @@ function fetchContextProvider(courier, Private) {
 
     const indexPattern = await courier.indexPatterns.get(indexPatternId);
 
-    return new SearchSource()
-      .inherits(false)
-      .set('index', indexPattern)
-      .set('version', true)
-      .set('size', size)
-      .set('filter', filters)
-      .set('query', {
-        match_all: {},
-      })
-      .set('searchAfter', anchorDocument.sort)
-      .set('sort', sort);
+    const source = anchorDocument._source;
+    if (source.kubernetes && source.kubernetes.pod_name) {
+      return new SearchSource()
+        .inherits(false)
+        .set('index', indexPattern)
+        .set('version', true)
+        .set('size', size)
+        .set('filter', filters)
+        .set('query', {
+          'bool': {
+            'must': [{
+              'match': {
+                'kubernetes.pod_name': {
+                  'query': source.kubernetes.pod_name,
+                  'type': 'phrase'
+                }
+              }
+            }],
+            'must_not': []
+          }
+        })
+        .set('searchAfter', anchorDocument.sort)
+        .set('sort', sort);
+    } else if (source.hostip) {
+      return new SearchSource()
+        .inherits(false)
+        .set('index', indexPattern)
+        .set('version', true)
+        .set('size', size)
+        .set('filter', filters)
+        .set('query', {
+          'bool': {
+            'must': [{
+              'match': {
+                'hostip': {
+                  'query': source.hostip,
+                  'type': 'phrase'
+                }
+              }
+            }],
+            'must_not': []
+          }
+        })
+        .set('searchAfter', anchorDocument.sort)
+        .set('sort', sort);
+    } else if (source.node_name) {
+      return new SearchSource()
+        .inherits(false)
+        .set('index', indexPattern)
+        .set('version', true)
+        .set('size', size)
+        .set('filter', filters)
+        .set('query', {
+          'bool': {
+            'must': [{
+              'match': {
+                'node_name': {
+                  'query': source.node_name,
+                  'type': 'phrase'
+                }
+              }
+            }],
+            'must_not': []
+          }
+        })
+        .set('searchAfter', anchorDocument.sort)
+        .set('sort', sort);
+    } else {
+      return new SearchSource()
+        .inherits(false)
+        .set('index', indexPattern)
+        .set('version', true)
+        .set('size', size)
+        .set('filter', filters)
+        .set('query', {
+          match_all: {},
+        })
+        .set('searchAfter', anchorDocument.sort)
+        .set('sort', sort);
+    }
   }
 
   async function performQuery(searchSource) {
