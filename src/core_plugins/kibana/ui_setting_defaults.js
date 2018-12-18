@@ -24,10 +24,10 @@ export function getUiSettingDefaults() {
         features are enabled in the query bar. To disallow leading wildcards in basic lucene queries, use query:queryString:options`,
     },
     'search:queryLanguage': {
-      value: 'lucene',
+      value: 'kuery',
       description: 'Query language used by the query bar. Kuery is an experimental new language built specifically for Kibana.',
       type: 'select',
-      options: ['lucene', 'kuery']
+      options: ['kuery']
     },
     'sort:options': {
       value: '{ "unmapped_type": "boolean" }',
