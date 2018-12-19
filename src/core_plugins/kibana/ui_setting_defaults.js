@@ -74,7 +74,7 @@ export function getUiSettingDefaults() {
       description: 'The index to access if no index is set',
     },
     'defaultColumns': {
-      value: ['_source'],
+      value: ['log'],
       description: 'Columns displayed by default in the Discovery tab',
     },
     'metaFields': {
