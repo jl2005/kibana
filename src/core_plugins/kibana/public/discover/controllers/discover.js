@@ -33,6 +33,7 @@ import { SavedObjectsClientProvider } from 'ui/saved_objects';
 import { recentlyAccessed } from 'ui/persisted_log';
 import { getDocLink } from 'ui/documentation_links';
 import '../components/fetch_error';
+import { saveAs } from '@elastic/filesaver';
 
 const app = uiModules.get('apps/discover', [
   'kibana/notify',
@@ -136,6 +137,12 @@ function discoverController(
   const notify = new Notifier({
     location: 'Discover'
   });
+
+  $scope.downloadSize = 0;
+  $scope.download = function (size) {
+    $scope.downloadSize = size;
+    $scope.fetch();
+  };
 
   $scope.getDocLink = getDocLink;
   $scope.intervalOptions = Private(AggTypesBucketsIntervalOptionsProvider);
@@ -514,6 +521,10 @@ function discoverController(
     segmented.setSortFn(sortFn);
     segmented.setSize($scope.opts.sampleSize);
 
+    if ($scope.downloadSize > 0) {
+      segmented.setSize($scope.downloadSize);
+    }
+
     // triggered when the status updated
     segmented.on('status', function (status) {
       $scope.fetchStatus = status;
@@ -551,6 +562,19 @@ function discoverController(
       // the merge rows, use a new array to help watchers
       $scope.rows = merged.hits.hits.slice();
 
+      // save data
+      if ($scope.downloadSize > 0) {
+        const lines = $scope.rows.map(function (row) {
+          const val = row._source.log;
+          if (val) {
+            return JSON.stringify(val);
+          }
+          return JSON.stringify(row._source);
+        });
+        const data = lines.join('\r\n');
+        saveAs(new Blob([data], { type: 'text/plain' }), indexPattern + $scope.downloadSize + '.txt');
+      }
+
       notify.event('flatten hit and count fields', function () {
         let counts = $scope.fieldCounts;
 
@@ -577,6 +601,10 @@ function discoverController(
     });
 
     segmented.on('complete', function () {
+      // clear downloadSize flag
+      if ($scope.downloadSize > 0) {
+        $scope.downloadSize = 0;
+      }
       if ($scope.fetchStatus.hitCount === 0) {
         flushResponseData();
       }
