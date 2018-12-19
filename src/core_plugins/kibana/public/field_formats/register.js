@@ -12,6 +12,7 @@ import { createSourceFormat } from '../../common/field_formats/types/source';
 import { createColorFormat } from '../../common/field_formats/types/color';
 import { createTruncateFormat } from '../../common/field_formats/types/truncate';
 import { createBoolFormat } from '../../common/field_formats/types/boolean';
+import { createMapFormat } from '../../common/field_formats/types/map';
 
 fieldFormats.register(createUrlFormat);
 fieldFormats.register(createBytesFormat);
@@ -26,3 +27,4 @@ fieldFormats.register(createSourceFormat);
 fieldFormats.register(createColorFormat);
 fieldFormats.register(createTruncateFormat);
 fieldFormats.register(createBoolFormat);
+fieldFormats.register(createMapFormat);
