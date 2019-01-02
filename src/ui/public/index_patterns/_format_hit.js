@@ -54,8 +54,11 @@ export function formatHit(indexPattern, defaultFormat, mapFormat) {
     }
 
     if (fieldName === 'log') {
-      const val1 = hit._source[fieldName];
-      return partials[fieldName] = convertlog(hit, val1);
+      const val = hit._source[fieldName];
+      if (val) {
+          return partials[fieldName] = convertlog(hit, val);
+      }
+      fieldName = '_source';
     }
 
     const val = fieldName === '_source' ? hit._source : indexPattern.flattenHit(hit)[fieldName];
